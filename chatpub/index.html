@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="http://code.jquery.com/jquery-3.4.1.js"></script>
+    <script async defer src="/socket.io/socket.io.js"></script>
+    
+    <script async defer src="client.js"></script>
+</head>
+<body>
+    <div id="loginbox">
+        <input id="uname" placeholder="Enter Username">
+        <input id="pass" placeholder="Password" type="password">
+        <button id="btnuname">Log In</button>
+    </div>
+    <div id="chatbox">
+       <input id="touser" placeholder="Send to">
+        <input id="inpmsg" placeholder="New Message">
+    <button id="btnsend">Send</button>
+    <ul id="ulmsg"></ul>
+    </div>
+    
+</body>
+</html>
