@@ -15,9 +15,7 @@ socket.on('loggedin',()=>{
     
 })
 $('#btnsend').click(()=>{
-    console.log('huhihui')
-    console.log('pepepe')
-    console.log('testing 123')
+   
     socket.emit('msgsend',{
         to:$('#touser').val(),
         msg:$('#inpmsg').val(),
