@@ -1,4 +1,4 @@
-let socket=io()
+let socket=io('/')
 // let inpmsg=document.getElementById('inpmsg')
 // let btnsend=document.getElementById('btnsend')
 // let ulmsg=document.getElementById('ulmsg')
