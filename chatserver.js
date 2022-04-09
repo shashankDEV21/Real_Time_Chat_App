@@ -3,10 +3,17 @@ const app=express()
 const http=require('http')
 const socketio=require('socket.io')
 const { Socket } = require('dgram')
+const { v4: uuidV4 } = require('uuid')
 const server=http.createServer(app)
 const io=socketio(server)
 
  app.use('/',express.static(__dirname+'/chatpub'))
+ app.get('/',(req,res)=>{
+    res.redirect(`/${uuidV4()}`)
+})
+app.get('/:room',(req,res)=>{
+    res.render('/chatpub/index',{ roomId: req.params.room })
+})
 
 let users={        //let a={} it means a is an object
 shashank:'12345',
@@ -40,7 +47,12 @@ socket.on('login',(data)=>{
         // socket.emit('loggedin')
         log(socket,data.username)
     }
-  
+    socket.on('join-room', (roomId, userId) => {
+        socket.join(roomId)
+        socket.broadcast.to(roomId).emit('user-connected', userId)
+       
+      })
+       
 })
 socket.on('msgsend',(data)=>{
     //data.from=socketMap[socket.id]
