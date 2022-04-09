@@ -1,17 +1,26 @@
 let socket=io()
-const vidgrid=document.getElementById('video-grid')
-const mypeer=new Peer(undefined,{
-    host:'/',
-    port:3001
-})
-const peers={}
-const myvideo=document.createElement('video')
-myvideo.muted=true
+// let inpmsg=document.getElementById('inpmsg')
+// let btnsend=document.getElementById('btnsend')
+// let ulmsg=document.getElementById('ulmsg')
 
+// btnsend.onclick=function (){
+//     console.log('hehe3')
+// socket.emit('sendmsg',{
+//     msg:inpmsg.value,
+    
+// })
+// inpmsg.value=''
+// }
+// socket.on('msgrcv',(data)=>{
+//     console.log('hehe1')
+//     let limsg=document.createElement('li')
+//     limsg.innerText=data.msg
+//     ulmsg.appendChild(limsg)
+//     console.log('hehe2')
+// })
 $(document).ready(function(){
 $('#loginbox').show()
 $('#chatbox').hide()
-$('#getroom').hide()
 $('#btnuname').click(()=>{
 socket.emit('login',{
     username:$('#uname').val(),
@@ -21,59 +30,14 @@ socket.emit('login',{
 socket.on('loggedin',()=>{
     $('#loginbox').hide()
     $('#chatbox').show()
-    $('getroom').show()
     
 })
 $('#btnsend').click(()=>{
-   
     socket.emit('msgsend',{
         to:$('#touser').val(),
         msg:$('#inpmsg').val(),
         from:$('#uname').val()
     })
-})
-$('#vdosend').click(()=>{
-   // $('#form1').hide()
-    navigator.mediaDevices.getUserMedia({
-        audio:true,
-        video:true
-      }).then(stream=>{
-        addVideoStream(myvideo,stream)
-        
-        mypeer.on('call',call=>{
-          call.answer(stream)
-          const vid=document.createElement('video')
-          call.on('stream',userVideoStream=>{
-            addVideoStream(vid,userVideoStream)
-          })
-        })
-     
-        socket.on('user-connected', userId => {
-            connectednewUser(userId,stream)
-            })
-        })
-        mypeer.on('open',id=>{
-            socket.emit('join-room',ROOM_CODE,id)
-        })
-        function connectednewUser(userId,stream){
-            const call=mypeer.call(userId,stream)
-            const video=document.createElement('video')
-            call.on('stream',userVideoStream=>{
-              addVideoStream(video,userVideoStream)
-            })
-            call.on('close',()=>{
-              video.remove()
-            })
-        }
-        function addVideoStream(myvideo,stream){
-            myvideo.srcObject=stream
-            myvideo.addEventListener('loadedmetadata',()=>{
-              myvideo.play()
-            })
-            vidgrid.append(myvideo)
-          }
-            
-
 })
 socket.on('msgrcved',(data)=>{
 // let lim=document.createElement('li')
@@ -86,4 +50,5 @@ socket.on('fail',()=>{
     window.alert('Username or Password is incorrect')
 })
 
+    
 })
